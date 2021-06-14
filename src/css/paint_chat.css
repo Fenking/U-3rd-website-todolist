@@ -1,0 +1,22 @@
+/* PaintChat用 CSS */
+
+.paint_chat {
+  display: flex;
+  flex-direction: column;
+}
+
+.paint_chat canvas {
+  border: 1px dotted grey;
+}
+
+.paint_chat .control_box {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: start;
+}
+
+.paint_chat .control_box .control_input {
+  display: flex;
+  flex-direction: column;
+}

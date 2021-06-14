@@ -1,0 +1,88 @@
+/* ToDoリストアプリ用 CSS */
+/* ここから */
+.todo_app>.title{
+    color:hsl(24, 100%, 98%);
+    background-color: hsl(118, 100%, 20%);
+    text-align: center;
+    padding: 4px;
+    border-radius: 4px 4px 0px 0px;
+    user-select: none;
+}
+.todo_app>.title:hover{
+    cursor: pointer;
+}
+
+.todo_app>.task_list{
+    border-left: 1px solid hsl(118, 100%, 20%);
+    border-right: 1px solid hsl(118, 100%, 20%);
+    border-bottom: 1px solid hsl(118, 100%, 20%);
+    border-radius: 0px 0px 4px 4px;
+}
+.todo_app>.task_list>.task:last-child{
+    border-radius: 0px 0px 4px 4px;
+}
+.todo_app>.task_list>.task>.task1{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 1px dashed hsl(0, 0%, 60%);
+    border-top: 1px solid hsl(118, 100%, 20%);
+    background-color: white;
+    flex-wrap: wrap;
+}
+.todo_app>.task_list>.task>.task1:hover{
+    background-color: hsl(118, 100%, 40%);
+}
+.todo_app>.task_list>.task>.task1>.completed{
+    flex: 0 0 2rem;
+    text-align: center;
+}
+.todo_app>.task_list>.task>.task1>.description{
+    flex: 1 0 auto;
+    text-align: left;
+    padding-left: 4px;
+}
+.todo_app>.task_list>.task>.task1>.done{
+    text-decoration: line-through;
+    color: rgb(78, 78, 78);
+    background-color: hsl(118, 100%, 60%);
+}
+
+.todo_app>.task_list>.task.overdue{
+    color: red;
+}
+.todo_app>.task_list>.task>.details{
+    float: left;
+}
+
+.todo_app>.task_list>.task>.task2{
+    /* flex: 1 0 auto; */
+    text-indent: 30px;
+}
+
+.todo_app>.task_input{
+    margin-top: 4px;
+    width: 90%;
+    float: left;
+}
+.todo_app>.task_input>.task_input2{
+    margin-top: 4px;
+    display: flex;
+}
+.todo_app>.task_input>.task_input3{
+    margin-top: 4px;
+    display: flex;
+}
+.todo_app>.task_input>.task_input2>input{
+    flex: 1 0 auto;
+}
+.todo_app>.task_input>.task_input3>textarea{
+    flex: 1 0 auto;
+}
+.todo_app>.task_button{
+    margin-top: 6px;
+    width: 10%;
+    float: left;
+}
+
+/* ここまで */

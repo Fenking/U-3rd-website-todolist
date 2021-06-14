@@ -1,0 +1,33 @@
+/* TextChat用 CSS */
+
+.text_chat {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.text_chat .control_box {
+  display: flex;
+  justify-content: space-between;
+}
+
+.text_chat .control_box > input {
+  flex: 1 1 auto;
+}
+
+.text_chat .message_list {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  border: 1px dotted grey;
+}
+
+.text_chat .message_list .from-me {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.text_chat .message_list .from-them {
+  display: flex;
+  justify-content: flex-start;
+}

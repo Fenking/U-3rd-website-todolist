@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>第４週ミニ課題</title>
+  <link rel="stylesheet" href="css/default.css">
+  <!-- CSSを定義する．-->
+  <style>
+    /* ここから */
+    .task{
+      border-bottom: 1px solid blue;font-size: 18px;padding: 10px 20px;
+    }
+    .task>span{
+      display: inline-block;width: 33%;
+    }
+    .task>input{
+      display: inline-block;width: 33%;
+    }
+    .task>span:nth-child(1){
+      text-align: center;
+      width: 20%;
+    }
+    .task_list{
+      border-left: 1px solid blue;
+      border-right: 1px solid blue;
+      width: 80%;text-align: center;margin: auto;
+    }
+    .task_list>.task:nth-child(1){
+      color: white;background: blue;
+    }
+    /* ここまで */
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- 各自の学生証番号と氏名で置き換えること -->
+    <div class="namebox">26001904662<br>YAN YIPEI</div>
+
+    <h1>第４週ミニ課題</h1>
+    <p>先週のミニ課題（ToDoリストの内容の表示）において，タスクが実行済か否かを
+      <code>checkbox</code>
+      を使って表現せよ．</p>
+    <p>また，JavaScriptを使って
+      <code>checkbox</code>
+      の状態をタスクの記述に反映させよ．例えば，実行済のタスクの記述は，取り消し線を追加するなど．</p>
+    </p>
+    <p>さらに，CSSを使って見た目を工夫してみよ．</p>
+    <hr class="answer">
+    <!-- ここから -->
+    <div class="task_list">
+      <div class="task">
+        <span>id</span><span>completed</span><span>task</span>
+      </div class="task">
+      <div class="task">
+        <span>0</span><input type="checkbox" checked><span>実行済のタスク</span>
+      </div>
+      <div class="task">
+        <span>1</span><input type="checkbox"><span>これから実行するタスク</span>
+      </div>
+    </div>
+    <!-- ここまで -->
+  </div>
+  <script>
+    /* ここから */
+    const updateChange=()=>{
+      // var checkbox1=document.querySelectorAll('div.task_list input[type="checkbox"]');
+      var checkbox1=document.getElementsByTagName('input');
+      Array.from(checkbox1).map(val=>{
+        if (val.checked) {
+          val.nextSibling.style.backgroundColor="lightgreen";
+        }else{
+          val.nextSibling.style.backgroundColor="red";
+        }
+      });
+      /*for test*/
+      // for (let i = 0; i < checkbox1.length; i++){
+      //   if (checkbox1[i].checked) {
+      //     checkbox1[i].nextSibling.style.backgroundColor="lightgreen";
+      //   }else{
+      //     checkbox1[i].nextSibling.style.backgroundColor="red";
+      //   }
+      // }
+    };
+    // document.querySelector('div.task_list').addEventListener('change',()=>{updateChange();});
+    Array.from(document.getElementsByTagName('input')).map(val=>val.addEventListener('change',()=>{updateChange();}));
+    updateChange();
+
+    /* ここまで */
+  </script>
+</body>
+</html>

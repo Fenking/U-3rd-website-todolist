@@ -1,0 +1,13 @@
+/.idea
+/.vscode
+/node_modules
+.env
+/.cache
+/dist
+# for python
+/__pycache__
+/venv
+# for template
+/.ignore
+# database
+/db/database.db

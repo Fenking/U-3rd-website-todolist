@@ -1,0 +1,65 @@
+/* 共通の CSS */
+/* box-sizingを使用する */
+html {
+  box-sizing: border-box;
+}
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+/* container */
+.container {
+  position: relative;
+  width: 80%;
+  margin: auto;
+}
+
+/* student id & name */
+.namebox {
+  position: absolute;
+  top: 0;
+  right: 0;
+  text-align: right;
+}
+
+/* hr answer */
+hr.answer {
+  
+}
+
+/* button support */
+.btn {
+  color: hsl(220, 100%, 98%);
+  background: hsl(220, 100%, 40%);
+  cursor: pointer;
+  text-decoration: none;
+  user-select: none;
+}
+
+.btn:hover {
+  background: hsl(220, 100%, 30%);
+}
+
+/* error message support */
+.error-message {
+  color: hsla(0, 100%, 27%, 1);
+  background-color: hsla(0, 100%, 90%, 1);
+  padding: 4px;
+  display: flex;
+  align-items: center;
+}
+/* カーソルを変える */
+.error-message:hover {
+  cursor: pointer;
+}
+/* メッセージの前に &times;を追加する． */
+.error-message::before {
+  content: "\02715";
+  background-color: hsla(0, 100%, 90%, 1);
+  margin-right: 8px;
+  width: 1.2rem;
+  height: 1.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

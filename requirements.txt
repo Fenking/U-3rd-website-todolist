@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+aiofiles
+databases[sqlite]
+# databases 0.4.2 is not compatible with sqlalchemy 1.4; downgrade sqlalchemy temporarily
+# sqlalchemy==1.3.23
