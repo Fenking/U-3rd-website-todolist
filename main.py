@@ -8,10 +8,11 @@ app = FastAPI()
 
 # CORSサポートを追加する．
 # ここから
-
-
-
-
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=['*'],
+    allow_methods=['*']
+)
 
 # ここまで
 
@@ -52,10 +53,11 @@ async def init_db():
 # ToDoアプリ用のWeb API
 # GET /todo タスクの一覧を返す．
 # ここから
-
-
-
-
+@app.get('/todo')
+async def todo_items():
+    query='SELECT * FROM todo'
+    items=await database.fetch_all(query)
+    return items
 
 # ここまで
 
