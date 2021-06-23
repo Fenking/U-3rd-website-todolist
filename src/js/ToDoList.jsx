@@ -39,7 +39,7 @@ export const ToDoList = (props) => {
 			  }
 		  });
 		  setItemInput('');//刷新输入框
-		  setItemDetails('');//刷新详细输入框
+		  setItemDetails('');//刷新详细内容输入框
 		  await getItems();//刷新用
 	  } catch (error) {
 		  setErrorMessage(error.message);
