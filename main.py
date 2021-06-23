@@ -46,7 +46,7 @@ async def shutdown():
 @app.post('/todo/init')
 async def init_db():
     await database.execute('DROP TABLE IF EXISTS todo')
-    await database.execute('CREATE TABLE todo (id INTEGER PRIMARY KEY, task TEXT, completed BOOLEAN)')
+    await database.execute('CREATE TABLE todo (id INTEGER PRIMARY KEY, task TEXT, completed BOOLEAN, level INTEGER, time TEXT, details TEXT, display BOOLEAN)')
     return Response(status_code=HTTP_204_NO_CONTENT)
 
 
@@ -79,9 +79,11 @@ async def todo_get(id:int):
 # POST /todo 新たなタスクを追加する．
 # ここから
 @app.post('/todo')
-async def todo_new(task:str=Body(...),completed:bool=Body(...)):
-    query='INSERT INTO todo (task,completed) VALUES(:task,:completed)'
-    lastrowid=await database.execute(query=query,values={'task':task,'completed':completed})
+async def todo_new(task:str=Body(...),completed:bool=Body(...),level:int=Body(...),time:str=Body(...),
+                    details:str=Body(...),display:bool=Body(...)):
+    query='INSERT INTO todo (task,completed,level,time,details,display) VALUES(:task,:completed,:level,:time,:details,:display)'
+    lastrowid=await database.execute(query=query,values={'task':task,'completed':completed,'level':level,'time':time,
+                    'details':details,'display':display})
     response=Response(status_code=HTTP_201_CREATED)
     response.headers['Location']=f'/todo/{lastrowid}'
     return response
@@ -92,9 +94,11 @@ async def todo_new(task:str=Body(...),completed:bool=Body(...)):
 # PUT /todo/{id} idのタスクの内容を更新する．そのようなタスクが存在しない場合はNot Found (404)を返す．
 # ここから
 @app.put('/todo/{id}')
-async def todo_update(id:int,task:str=Body(...),completed:bool=Body(...)):
-    query='UPDATE todo SET task=:task,completed=:completed WHERE id=:id'
-    rowcount=await database.execute(query=query,values={'task':task,'completed':completed,'id':id})
+async def todo_update(id:int,task:str=Body(...),completed:bool=Body(...),level:int=Body(...),time:str=Body(...),
+                        details:str=Body(...),display:bool=Body(...)):
+    query='UPDATE todo SET task=:task,completed=:completed,level=:level,time=:time,details=:details,display=:display WHERE id=:id'
+    rowcount=await database.execute(query=query,values={'task':task,'completed':completed,'level':level,'time':time,
+                    'details':details,'display':display, 'id':id})
     if rowcount==0:
         return Response(status_code=HTTP_404_NOT_FOUND)
     else:
