@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Body, Response
-from starlette.status import HTTP_204_NO_CONTENT, HTTP_404_NOT_FOUND
+from starlette.status import HTTP_204_NO_CONTENT, HTTP_404_NOT_FOUND, HTTP_201_CREATED
 from databases import Database
 import sqlite3
 from fastapi.middleware.cors import CORSMiddleware
@@ -64,40 +64,55 @@ async def todo_items():
 
 # GET /todo/{id} idのタスクを返す．存在しない場合はNot Found (404)を返す．
 # ここから
-
-
-
-
+@app.get('/todo/{id}')
+async def todo_get(id:int):
+    query='SELECT * FROM todo WHERE id = :id'
+    item=await database.fetch_one(query=query,values={'id':id})
+    if item is None:
+        return Response(status_code=HTTP_404_NOT_FOUND)
+    else:
+        return item
 
 # ここまで
 
 
 # POST /todo 新たなタスクを追加する．
 # ここから
-
-
-
-
+@app.post('/todo')
+async def todo_new(task:str=Body(...),completed:bool=Body(...)):
+    query='INSERT INTO todo (task,completed) VALUES(:task,:completed)'
+    lastrowid=await database.execute(query=query,values={'task':task,'completed':completed})
+    response=Response(status_code=HTTP_201_CREATED)
+    response.headers['Location']=f'/todo/{lastrowid}'
+    return response
 
 # ここまで
 
 
 # PUT /todo/{id} idのタスクの内容を更新する．そのようなタスクが存在しない場合はNot Found (404)を返す．
 # ここから
-
-
-
-
+@app.put('/todo/{id}')
+async def todo_update(id:int,task:str=Body(...),completed:bool=Body(...)):
+    query='UPDATE todo SET task=:task,completed=:completed WHERE id=:id'
+    rowcount=await database.execute(query=query,values={'task':task,'completed':completed,'id':id})
+    if rowcount==0:
+        return Response(status_code=HTTP_404_NOT_FOUND)
+    else:
+        return Response(status_code=HTTP_204_NO_CONTENT)
 
 # ここまで
 
 
 # DELETE /todo/{id} idのタスクを削除する．そのようなタスクが存在しない場合はNot Found (404)を返す．
 # ここから
-
-
-
-
+@app.delete('/todo/{id}')
+async def todo_delete(id:int):
+    query='DELETE FROM todo WHERE id=:id'
+    rowcount=await database.execute(query=query,values={'id':id})
+    if rowcount==0:
+        return Response(status_code=HTTP_404_NOT_FOUND)
+    else:
+        return Response(status_code=HTTP_204_NO_CONTENT)
 
 # ここまで
 
