@@ -1,0 +1,84 @@
+
+.text_chat .message_list{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 100%;
+
+    position: relative;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    margin-top: 10px;
+}
+
+
+.text_chat .message_list .from-me{
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+
+    border-radius: 7px;
+    border: 1px solid green;
+    background-color: greenyellow;
+    margin: 1px 5px 1px auto;
+}
+.text_chat .message_list .from-me .bottom{
+    position: absolute;
+    bottom: 7px;
+    right: -10px;
+    border-bottom: 10px solid green;
+    border-right: 10px solid transparent;
+}
+
+
+.text_chat .message_list .from-them{
+    display: flex;
+    justify-content: flex-start;
+    position: relative;
+    margin: 2px auto 2px 2px;
+}
+.text_chat .message_list .from-them .Outside{
+    display: inline;
+    float: left;
+}
+.text_chat .message_list .from-them .Inside{
+    display: inline;
+    position: relative;
+    border-radius: 7px;
+    border: 1px solid #00b6b6;
+    background-color: #94ffea;
+    margin-left: 10px;
+    white-space: pre-wrap;
+    float: left;
+}
+.text_chat .message_list .from-them .Inside .bottom{
+    position: absolute;
+    top: 7px;
+    left: -10px;
+    border-top: 10px solid #00b6b6;
+    border-left: 10px solid transparent;
+}
+
+
+.text_chat .message_list .from-me>div{
+    white-space: pre-wrap;
+}
+
+
+.text_chat .message_list_container{
+    height: 20rem;
+    border: 1px dotted grey;
+    overflow: auto;
+}
+
+.chat_input{
+    min-height: 100%;
+}
+.chat_input>textarea{
+    float: left;
+}
+.chat_input>button{
+    float: left;
+}
