@@ -85,7 +85,7 @@ export const ChatBotAdapter=(props)=>{
             const reply=await axios({
                 method:'post',
                 url:props.botCallback,
-                data:msg,
+                data:msg
             });
             const data=reply.data;
             data.from=props.botName;
@@ -119,9 +119,11 @@ export const ChatBotAdapter=(props)=>{
             {/*チャットボット・アダプタ*/}
             <div className="chatbot_monitor">
                 <div>ChatBot Callback URL:{props.botCallback}</div>
-                <div>{botInMessage && botInMessage.body?botInMessage.body:'--'}</div>
+                <span>{socket?'Opened':'Please wait for start'}</span>
+                <div><b>If you want to ask ChatBot, You can also use '@bot'</b></div>
+                <div>{botInMessage && botInMessage.body?botInMessage.from+':'+botInMessage.body:'--'}</div>
                 <div>↓</div>
-                <div>{botOutMessage && botOutMessage.body?botOutMessage.body:'--'}</div>
+                <div>{botOutMessage && botOutMessage.body?'To '+botOutMessage.to+':'+botOutMessage.body:'--'}</div>
             </div>
             {/*エラーメッセージ*/}
             {errorMessage===''?null:

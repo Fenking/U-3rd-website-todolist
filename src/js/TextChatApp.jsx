@@ -7,6 +7,7 @@ export const TextChatApp=(props)=>{
     const [errorMessage,setErrorMessage]=useState('');
     //位置移动到此
     const [inputMessage,setInputMessage]=useState('');
+    const [toname,setToname]=useState('');
     // const [receivedMessage,setReceivedMessage]=useState({});//聊天记录,暂不使用
     const [messages,setMessages]=useState([]);//聊天记录列表
     const lastMessageRef=useRef(null);
@@ -85,14 +86,20 @@ export const TextChatApp=(props)=>{
 
     //send text chat message
     const sendTextMessage=()=>{
-        sendMessage({from:usernameRef.current, body:inputMessage, time:time});
+        sendMessage({from:usernameRef.current, body:inputMessage, time:time, to:toname});
         setInputMessage('');//send后清空输入栏
+        setToname('');
     };
 
     //renew(change) input
     const inputMessageChanged=(event)=>{
         setInputMessage(event.target.value)
     };
+
+    //renew(change) toname
+    const tonameChanged=(event)=>{
+        setToname(event.target.value)
+    }
 
     useEffect(()=>{
         openSocket();
@@ -123,15 +130,23 @@ export const TextChatApp=(props)=>{
                         <div className="message_list">
                             {//自分が送ったメッセージは右に寄せる
                             messages.map((message,index)=>(
+                                message.to==='bot' && message.from!=usernameRef.current?
+                                <div key={message.timestamp} className={'from-them'} {...index===messages.length-1?{ref:lastMessageRef}:{}}>
+                                    <div title={message.time}><div className="Outside">{message.from}&gt;</div>
+                                    <div className="Inside">{'@bot '+message.body}<span className="bottom"></span></div></div>
+                                </div>
+                                :
+                                (message.to===usernameRef.current || message.to===''||message.from===usernameRef.current||message.from==='bot'?
                                 <div key={message.timestamp}
                                 className={message.from===usernameRef.current?'from-me':'from-them'}
                                 {//最後の行をmessageRefに割り当てる
                                 ...index===messages.length-1?{ref:lastMessageRef}:{}}>
                                     {message.from===usernameRef.current?
-                                        <div title={message.time}>{message.body}<span class="bottom"></span></div>:
+                                        <div title={message.time}>{message.to!=''?'@'+message.to+' ':''}{message.body}<span className="bottom"></span></div>:
                                         <div title={message.time}><div className="Outside">{message.from}&gt;</div>
-                                        <div className="Inside">{message.body}<span class="bottom"></span></div></div>}
-                                </div>
+                                        <div className="Inside">{message.to===usernameRef.current && message.from!='bot'?'[Private]':''}
+                                            {message.body}<span className="bottom"></span></div></div>}
+                                </div>:null)
                             ))}
                         </div>
                     </div>
@@ -140,6 +155,7 @@ export const TextChatApp=(props)=>{
                 {/*メッセージの送信*/}
                 <div className="chat_input">
                     <textarea rows="3" cols="45" type="text" onChange={inputMessageChanged} value={inputMessage}/>
+                    <input type="text" placeholder="To Private(nowrite as all)" onChange={tonameChanged} value={toname} />
                     <button onClick={sendTextMessage} disabled={!socket||inputMessage.length===0}>
                         送信
                     </button>

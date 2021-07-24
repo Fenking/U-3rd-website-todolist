@@ -82,3 +82,25 @@
 .chat_input>button{
     float: left;
 }
+
+.chatbot_monitor{
+    height: 10rem;
+    border: 1px dotted grey;
+    overflow: auto;
+}
+
+.paint_chat{
+    height: auto;
+    border: 1px dotted grey;
+    overflow: auto;
+}
+
+.chat_control{
+    width: auto;
+    border: 1px dotted plum;
+    background-color: plum;
+}
+.chat_control.connected{
+    border: 1px dotted greenyellow;
+    background-color: greenyellow;
+}

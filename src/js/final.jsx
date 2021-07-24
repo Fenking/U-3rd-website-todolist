@@ -5,21 +5,21 @@ import ReactDOM from 'react-dom';
    別ファイルに定義してインポートしても構わない．*/
 /* ここから */
 import {TextChatApp} from './TextChatApp.jsx';
-import {ChatBotAdapter} from './ChatBotAdapter.jsx';
+import {PaintChatApp} from './PaintChatApp.jsx';
 /* ここまで */
-
 ReactDOM.render(
-    <div style={{display:'flex',alignItems:'flex-start',justifyContent:'space-between'}}>
+    <div style={{display:'flex',alignItems:'flex-start',justifyContent:'space-between',flexWrap:'wrap'}}>
       {/* ここから */}
-      <div style={{flex:'0 0 45%'}}>
-        <ChatBotAdapter />
+      <div style={{flex:'0 0 100%'}}>
+        <a href="./final_bot.html" target="_blank">ここからチャットボットを起動します(一度だけ)</a>
+        <div><b>If you want to ask ChatBot, You can also use '@bot'</b></div>
       </div>
       <div style={{flex:'0 0 45%'}}>
         <TextChatApp />
       </div>
-      {/* <div style={{flex:'0 0 45%'}}>
+      <div style={{flex:'0 0 45%'}}>
         <PaintChatApp />
-      </div> */}
+      </div>
       {/* ここまで */}
     </div>,
     document.getElementById('root')

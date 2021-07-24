@@ -3,7 +3,10 @@ from starlette.status import HTTP_204_NO_CONTENT, HTTP_404_NOT_FOUND, HTTP_201_C
 from databases import Database
 import sqlite3
 from fastapi.middleware.cors import CORSMiddleware
+import time
+import random
 
+localtime=time.asctime(time.localtime(time.time()))
 app = FastAPI()
 
 # CORSサポートを追加する．
@@ -144,17 +147,31 @@ class EchoBotContext():
         return self.count
 
     # レスポンスを返す．
-    def response(self, text):
-        self.count_up()
-        if self.count % 3 == 1:
-            # count数とテキストを返す
-            return f'Echo ({self.count}) {text}'
-        elif self.count % 3 == 2:
-            # 逆転したテキストを返す
-            return f'Reversed {text[::-1]}'
-        else:
-            # Noneを返す．(無視を表している）
-            return None
+    # def response(self, text):
+    #     self.count_up()
+    #     if self.count % 3 == 1:
+    #         # count数とテキストを返す
+    #         return f'Echo ({self.count}) {text}'
+    #     elif self.count % 3 == 2:
+    #         # 逆転したテキストを返す
+    #         return f'Reversed {text[::-1]}'
+    #     else:
+    #         # Noneを返す．(無視を表している）
+    #         return None
+    def response(self, text, to):
+        if to=='bot' or '@bot' in text:
+            text=text.split(' ')
+            if 'time' in text or 'TIME' in text or 'Time' in text or '時間' in text:
+                return f'TimeNow:{localtime}'
+            elif 'D' in text[-1] and text[-1].isalnum():
+                text_a=text[-1].split('D')
+                a_list=[]
+                for i in range(int(text_a[0])):
+                    a_list.append(random.randint(1,int(text_a[1])))
+                return f'{text_a[0]}Dice{text_a[1]} for {a_list}'
+            else:
+                return f'理解不能'
+
 
 
 # ユーザに対応したコンテキストを返す．
@@ -167,6 +184,6 @@ def get_context(username):
 
 # チャットボットのコールバックのAPI
 @app.post('/bot')
-def bot_callback(username: str = Body(..., alias='from'), body: str = Body(...)):
-    reply = get_context(username).response(body)
-    return {} if reply is None else {'body': reply}
+def bot_callback(username: str = Body(..., alias='from'), to: str=Body(...,alias='to'), body: str = Body(...)):
+    reply = get_context(username).response(body,to)
+    return {} if reply is None else {'body': reply,'to':username,'from':'bot'}
